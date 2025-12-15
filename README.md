@@ -49,4 +49,4 @@ Backend-сервис на FastAPI, реализующий REST API для упр
 
 ## Установите зависимости:
    ```bash
-   pip install fastapi uvicorn sqlalchemy[asyncio] httpx pydantic
+   pip install fastapi uvicorn sqlalchemy httpx aiosqlite pydantic
