@@ -731,6 +731,34 @@
             }
         }
 
+        async function getTaskById() {
+            const idStr = prompt("Введите ID задачи:");
+            if (!idStr) return;
+            const id = parseInt(idStr.trim());
+            if (isNaN(id) || id <= 0) {
+                showStatus('Некорректный ID задачи', 'error');
+                return;
+            }
+
+            try {
+                const task = await apiRequest('GET', `/tasks/${id}`);
+                const info = `
+        ID: ${task.id}
+        Заголовок: ${task.title}
+        Описание: ${task.description || '—'}
+        Выполнено: ${task.done ? '✅' : '❌'}
+        Категория: ${task.category || '—'}
+        Приоритет: ${task.priority}
+        Источник: ${task.source === 'hacker_news' ? 'Hacker News' : 'Ручная'}
+        Создана: ${new Date(task.created_at).toLocaleString()}
+        Обновлена: ${new Date(task.updated_at).toLocaleString()}
+                `.trim();
+                alert(`Задача найдена:\n\n${info}`);
+            } catch (error) {
+                showStatus(`Задача #${id} не найдена или ошибка: ${error.message}`, 'error');
+            }
+        }
+
         // ========== ИНИЦИАЛИЗАЦИЯ ==========
         document.addEventListener('DOMContentLoaded', () => {
             // Подключаем WebSocket автоматически
@@ -769,6 +797,7 @@
 
             document.getElementById('test-add').addEventListener('click', testAdd);
             document.getElementById('test-health').addEventListener('click', testHealth);
+            document.getElementById('get-task-by-id').addEventListener('click', getTaskById);
 
             // Добавляем возможность отправки формы по Enter
             document.getElementById('title').addEventListener('keypress', (e) => {

@@ -201,7 +201,7 @@ async def save_hn_stories_to_db(stories: List[dict], db: AsyncSession):
 
 
 async def background_task_worker():
-    """Рабочая функция фоновой задачи"""
+    """Функция фоновой задачи"""
     global background_task_running
 
     while background_task_running:
@@ -275,7 +275,7 @@ app.add_middleware(
 )
 
 
-# ========== МИДЛВАРЫ ==========
+# ========== MIDDLEWARE ==========
 @app.middleware("http")
 async def log_requests(request: Request, call_next):
     start_time = time.time()
